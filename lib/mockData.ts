@@ -1,4 +1,4 @@
-export type Category = 'business' | 'fan' | 'complaint' | 'other';
+export type Category = 'pinned' | 'business' | 'fan' | 'harassment' | 'other';
 
 export interface Message {
   id: string;
@@ -18,6 +18,7 @@ export interface Conversation {
   lastMessage: string;
   lastMessageTime: Date;
   isUnread: boolean;
+  isPinned: boolean;
   messages: Message[];
 }
 
@@ -37,23 +38,24 @@ export const mockConversations: Conversation[] = [
     username: '@brand_cosmetics',
     avatarUrl: '/avatars/brand1.jpg',
     category: 'business',
-    lastMessage: '新商品のPR案件についてご相談させてください',
+    lastMessage: 'About our new product PR project',
     lastMessageTime: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2時間前
     isUnread: true,
+    isPinned: false,
     messages: [
       {
         id: 'm1',
         senderId: 'user1',
         senderName: '@brand_cosmetics',
-        content: 'こんにちは！弊社の新商品PR案件についてご相談させていただきたいです。',
+        content: 'Hello! We would like to discuss a PR project for our new product.',
         timestamp: new Date(Date.now() - 3 * 60 * 60 * 1000),
         isFromUser: false,
       },
       {
         id: 'm2',
         senderId: 'me',
-        senderName: 'あなた',
-        content: 'ありがとうございます。詳細を教えてください。',
+        senderName: 'You',
+        content: 'Thank you. Please share more details.',
         timestamp: new Date(Date.now() - 2.5 * 60 * 60 * 1000),
         isFromUser: true,
       },
@@ -61,7 +63,7 @@ export const mockConversations: Conversation[] = [
         id: 'm3',
         senderId: 'user1',
         senderName: '@brand_cosmetics',
-        content: '新商品のPR案件についてご相談させてください',
+        content: 'About our new product PR project',
         timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000),
         isFromUser: false,
       },
@@ -73,15 +75,16 @@ export const mockConversations: Conversation[] = [
     username: '@company_pr',
     avatarUrl: '/avatars/company1.jpg',
     category: 'business',
-    lastMessage: '広告案件のご提案です。報酬は...',
+    lastMessage: 'Advertising campaign proposal. Budget is...',
     lastMessageTime: new Date(Date.now() - 5 * 60 * 60 * 1000), // 5時間前
     isUnread: false,
+    isPinned: false,
     messages: [
       {
         id: 'm4',
         senderId: 'user2',
         senderName: '@company_pr',
-        content: '広告案件のご提案です。報酬は50万円を予定しております。',
+        content: 'We would like to propose an advertising campaign. The budget is 500,000 yen.',
         timestamp: new Date(Date.now() - 5 * 60 * 60 * 1000),
         isFromUser: false,
       },
@@ -93,15 +96,16 @@ export const mockConversations: Conversation[] = [
     username: '@event_organizer',
     avatarUrl: '/avatars/event1.jpg',
     category: 'business',
-    lastMessage: 'イベント登壇のお願い',
+    lastMessage: 'Speaking invitation for our event',
     lastMessageTime: new Date(Date.now() - 24 * 60 * 60 * 1000), // 1日前
     isUnread: false,
+    isPinned: false,
     messages: [
       {
         id: 'm5',
         senderId: 'user3',
         senderName: '@event_organizer',
-        content: '来月のイベントに登壇いただけないでしょうか？',
+        content: 'Would you be able to speak at our event next month?',
         timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000),
         isFromUser: false,
       },
@@ -115,15 +119,16 @@ export const mockConversations: Conversation[] = [
     username: '@fan_happy',
     avatarUrl: '/avatars/fan1.jpg',
     category: 'fan',
-    lastMessage: 'いつも応援してます！',
+    lastMessage: 'Always supporting you!',
     lastMessageTime: new Date(Date.now() - 10 * 60 * 60 * 1000),
     isUnread: false,
+    isPinned: false,
     messages: [
       {
         id: 'm6',
         senderId: 'fan1',
         senderName: '@fan_happy',
-        content: 'いつも応援してます！',
+        content: 'Always supporting you!',
         timestamp: new Date(Date.now() - 10 * 60 * 60 * 1000),
         isFromUser: false,
       },
@@ -135,15 +140,16 @@ export const mockConversations: Conversation[] = [
     username: '@fan_grateful',
     avatarUrl: '/avatars/fan2.jpg',
     category: 'fan',
-    lastMessage: '投稿見ました！素敵です',
+    lastMessage: "Saw your post! It's wonderful",
     lastMessageTime: new Date(Date.now() - 12 * 60 * 60 * 1000),
     isUnread: false,
+    isPinned: false,
     messages: [
       {
         id: 'm7',
         senderId: 'fan2',
         senderName: '@fan_grateful',
-        content: '投稿見ました！素敵です',
+        content: "Saw your post! It's wonderful",
         timestamp: new Date(Date.now() - 12 * 60 * 60 * 1000),
         isFromUser: false,
       },
@@ -156,15 +162,16 @@ export const mockConversations: Conversation[] = [
     username: `@fan_user${i + 3}`,
     avatarUrl: '/avatars/default.jpg',
     category: 'fan' as Category,
-    lastMessage: `ファンです！応援してます ${i + 1}`,
+    lastMessage: `I am a fan! Supporting you ${i + 1}`,
     lastMessageTime: new Date(Date.now() - (i + 13) * 60 * 60 * 1000),
     isUnread: false,
+    isPinned: false,
     messages: [
       {
         id: `mfan${i}`,
         senderId: `fan${i + 3}`,
         senderName: `@fan_user${i + 3}`,
-        content: `ファンです！応援してます ${i + 1}`,
+        content: `I am a fan! Supporting you ${i + 1}`,
         timestamp: new Date(Date.now() - (i + 13) * 60 * 60 * 1000),
         isFromUser: false,
       },
@@ -177,16 +184,17 @@ export const mockConversations: Conversation[] = [
     userId: 'complaint_user1',
     username: '@unhappy_customer',
     avatarUrl: '/avatars/complaint1.jpg',
-    category: 'complaint',
-    lastMessage: '先日の投稿について確認したいことがあります',
+    category: 'harassment',
+    lastMessage: 'I need to check something about your recent post',
     lastMessageTime: new Date(Date.now() - 6 * 60 * 60 * 1000),
     isUnread: true,
+    isPinned: false,
     messages: [
       {
         id: 'mc1',
         senderId: 'complaint_user1',
         senderName: '@unhappy_customer',
-        content: '先日の投稿について確認したいことがあります',
+        content: 'I need to check something about your recent post',
         timestamp: new Date(Date.now() - 6 * 60 * 60 * 1000),
         isFromUser: false,
       },
@@ -200,15 +208,16 @@ export const mockConversations: Conversation[] = [
     username: '@random_person',
     avatarUrl: '/avatars/other1.jpg',
     category: 'other',
-    lastMessage: '質問があります',
+    lastMessage: 'I have a question',
     lastMessageTime: new Date(Date.now() - 15 * 60 * 60 * 1000),
     isUnread: false,
+    isPinned: false,
     messages: [
       {
         id: 'mo1',
         senderId: 'other_user1',
         senderName: '@random_person',
-        content: '質問があります',
+        content: 'I have a question',
         timestamp: new Date(Date.now() - 15 * 60 * 60 * 1000),
         isFromUser: false,
       },
@@ -220,15 +229,16 @@ export const mockConversations: Conversation[] = [
     username: '@curious_follower',
     avatarUrl: '/avatars/other2.jpg',
     category: 'other',
-    lastMessage: 'こんにちは',
+    lastMessage: 'Hello',
     lastMessageTime: new Date(Date.now() - 20 * 60 * 60 * 1000),
     isUnread: false,
+    isPinned: false,
     messages: [
       {
         id: 'mo2',
         senderId: 'other_user2',
         senderName: '@curious_follower',
-        content: 'こんにちは',
+        content: 'Hello',
         timestamp: new Date(Date.now() - 20 * 60 * 60 * 1000),
         isFromUser: false,
       },
@@ -240,15 +250,16 @@ export const mockConversations: Conversation[] = [
     username: '@someone_else',
     avatarUrl: '/avatars/other3.jpg',
     category: 'other',
-    lastMessage: 'フォローありがとうございます',
+    lastMessage: 'Thanks for following',
     lastMessageTime: new Date(Date.now() - 25 * 60 * 60 * 1000),
     isUnread: false,
+    isPinned: false,
     messages: [
       {
         id: 'mo3',
         senderId: 'other_user3',
         senderName: '@someone_else',
-        content: 'フォローありがとうございます',
+        content: 'Thanks for following',
         timestamp: new Date(Date.now() - 25 * 60 * 60 * 1000),
         isFromUser: false,
       },
@@ -259,29 +270,36 @@ export const mockConversations: Conversation[] = [
 export const getCategorySummary = (): CategorySummary[] => {
   const summary: CategorySummary[] = [
     {
+      category: 'pinned',
+      label: 'Pinned',
+      icon: '⭐',
+      count: 0,
+      unreadCount: 0,
+    },
+    {
       category: 'business',
-      label: '案件依頼',
+      label: 'Business',
       icon: '📩',
       count: 0,
       unreadCount: 0,
     },
     {
       category: 'fan',
-      label: 'ファンレター',
+      label: 'Fan Mail',
       icon: '💌',
       count: 0,
       unreadCount: 0,
     },
     {
-      category: 'complaint',
-      label: 'クレーム',
+      category: 'harassment',
+      label: 'Harassment',
       icon: '⚠️',
       count: 0,
       unreadCount: 0,
     },
     {
       category: 'other',
-      label: 'その他',
+      label: 'Others',
       icon: '📋',
       count: 0,
       unreadCount: 0,
