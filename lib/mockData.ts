@@ -272,14 +272,14 @@ export const getCategorySummary = (): CategorySummary[] => {
     {
       category: 'pinned',
       label: 'Pinned',
-      icon: '⭐',
+      icon: '📌',
       count: 0,
       unreadCount: 0,
     },
     {
       category: 'business',
       label: 'Business',
-      icon: '📩',
+      icon: '💼',
       count: 0,
       unreadCount: 0,
     },
@@ -300,7 +300,7 @@ export const getCategorySummary = (): CategorySummary[] => {
     {
       category: 'other',
       label: 'Others',
-      icon: '📋',
+      icon: '📦',
       count: 0,
       unreadCount: 0,
     },

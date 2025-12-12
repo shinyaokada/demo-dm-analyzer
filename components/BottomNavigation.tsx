@@ -5,11 +5,11 @@ import { usePathname } from 'next/navigation';
 import { type Category } from '@/lib/mockData';
 
 const categories: Array<{ category: Category; icon: string }> = [
-  { category: 'pinned', icon: '⭐' },
-  { category: 'business', icon: '📩' },
+  { category: 'pinned', icon: '📌' },
+  { category: 'business', icon: '💼' },
   { category: 'fan', icon: '💌' },
   { category: 'harassment', icon: '⚠️' },
-  { category: 'other', icon: '📋' },
+  { category: 'other', icon: '📦' },
 ];
 
 export default function BottomNavigation() {

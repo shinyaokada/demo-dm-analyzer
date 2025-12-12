@@ -102,10 +102,14 @@ export default function ConversationClient({ initialConversation, categoryInfo }
             </div>
             <button
               onClick={handleTogglePin}
-              className="flex-shrink-0 text-2xl transition-transform active:scale-90"
+              className={`flex-shrink-0 px-3 py-1.5 rounded-md text-xs font-medium transition-all active:scale-95 ${
+                isPinned(conversation.id)
+                  ? 'bg-green-500 text-white'
+                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+              }`}
               title={isPinned(conversation.id) ? 'Unpin' : 'Pin'}
             >
-              {isPinned(conversation.id) ? '⭐' : '☆'}
+              {isPinned(conversation.id) ? '✓ Pinned' : 'Pin'}
             </button>
           </div>
         </div>
